@@ -22,7 +22,9 @@ const Home = () => {
 
   const totalPages = products.length / productsPerPage;
   const setPageHandler = (pg) => {
-    setPage(pg);
+    if (pg > 0 && pg <= totalPages) {
+      setPage(pg);
+    }
     
   };
 
@@ -88,12 +90,14 @@ const Home = () => {
       </div>
 
       {/* pagination code */}
-      <div className="flex bg-red-300 justify-center gap-4 text-xl">
-        <button onClick={() => setPage(page - 1)}>prev</button>
+      <div className="flex justify-center gap-4 text-xl">
+        <button onClick={() => setPageHandler(page - 1)} className="cursor-pointer">prev</button>
         {Array.from({ length: totalPages }).map((_, i) => (
-          <h1 onClick={()=>setPageHandler(i+1)} className="cursor-pointer">{i + 1}</h1>
+          <h1 onClick={() => setPageHandler(i + 1)} className={`${page === i+1 ? 'bg-purple-500':''} border border-gray-200 px-4 py-2 cursor-pointer` }>
+            {i + 1}
+          </h1>
         ))}
-        <button onClick={() => setPage(page + 1)}>next</button>
+        <button onClick={() => setPageHandler(page + 1)} className="cursor-pointer">next</button>
       </div>
     </div>
   );
