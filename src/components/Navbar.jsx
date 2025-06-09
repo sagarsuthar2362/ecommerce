@@ -10,7 +10,7 @@ const Navbar = () => {
   const [hamburgerMenu, setHamburgerMenu] = useState(false);
 
   return (
-    <div className="bg-gradient-to-r from-purple-700 to-black text-white flex items-center justify-between p-4">
+    <div className="bg-gradient-to-r from-purple-700 to-black text-white flex items-center justify-between p-4 fixed top-0 left-0 w-full z-999">
       <h1 id="logo" className="text-xl font-semibold w-fit ">
         <Link to={"/"}> ShopVerse</Link>
       </h1>

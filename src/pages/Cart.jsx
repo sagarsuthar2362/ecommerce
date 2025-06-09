@@ -90,7 +90,7 @@ const Cart = () => {
 
             <div
               id="summary"
-              className="bg-gradient-to-br from-purple-600 to-purple-300 flex-grow md:ml-4 text-white p-5"
+              className="bg-gradient-to-br from-purple-600 to-purple-300 flex-grow md:ml-4 text-white p-5 h-fit"
             >
               <h1 className="text-2xl font-semibold">Total </h1>
 
@@ -116,7 +116,10 @@ const Cart = () => {
                   $
                 </span>
               </div>
+
+              <button className=" w-full cursor-pointer py-2 rounded-md bg-white text-black mt-4">Check Out</button>
             </div>
+                    
           </div>
         ) : (
           <h1 className="text-xl text-slate-500 absolute left-1/2 top-1/2 -translate-1/2">

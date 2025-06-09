@@ -6,9 +6,10 @@ import { fetchProducts } from "../redux/slice/productSlice";
 
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/slice/productSlice";
+import Sidebar from "../components/Sidebar";
 
 const Home = () => {
-  const [data, setData] = useState({});
+  const [sidebar, setSidebar] = useState(false);
   const dispatch = useDispatch();
   const { products, loading, error } = useSelector((state) => state.product);
   const [page, setPage] = useState(1);
@@ -25,12 +26,29 @@ const Home = () => {
     if (pg > 0 && pg <= totalPages) {
       setPage(pg);
     }
-    
   };
 
+  const [selectedCategory, setSelectedCategory] = useState([]);
+
+  const filteredProducts =
+    selectedCategory.length > 0
+      ? products.filter((item) => selectedCategory.includes(item.category))
+      : products;
+
+  console.log(filteredProducts, selectedCategory);
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-4 py-8 md:ml-0">
+      <Sidebar
+        sidebar={sidebar}
+        setSidebar={setSidebar}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
+
+      <div
+        className="flex flex-wrap justify-center gap-4 py-20 md:ml-0"
+        style={{ marginLeft: sidebar && "300px" }}
+      >
         {loading ? (
           <div className="flex flex-wrap justify-center gap-4 ">
             {Array.from({ length: 9 }).map((_, i) => (
@@ -43,7 +61,7 @@ const Home = () => {
         ) : error ? (
           <p>Error: {error}</p>
         ) : (
-          products.slice(start, end).map((products) => (
+          filteredProducts.slice(start, end).map((products) => (
             <div
               key={products.id}
               className="border border-slate-300 w-[22rem]"
@@ -88,16 +106,33 @@ const Home = () => {
           ))
         )}
       </div>
-
       {/* pagination code */}
-      <div className="flex justify-center gap-4 text-xl">
-        <button onClick={() => setPageHandler(page - 1)} className="cursor-pointer">prev</button>
+      <div
+        className="flex justify-center gap-4 text-xl"
+        style={{ marginLeft: sidebar ? "350px" : "0" }}
+      >
+        <button
+          onClick={() => setPageHandler(page - 1)}
+          className="cursor-pointer"
+        >
+          prev
+        </button>
         {Array.from({ length: totalPages }).map((_, i) => (
-          <h1 onClick={() => setPageHandler(i + 1)} className={`${page === i+1 ? 'bg-purple-500':''} border border-gray-200 px-4 py-2 cursor-pointer` }>
+          <h1
+            onClick={() => setPageHandler(i + 1)}
+            className={`${
+              page === i + 1 ? "bg-purple-500" : ""
+            } border border-gray-200 px-4 py-2 cursor-pointer`}
+          >
             {i + 1}
           </h1>
         ))}
-        <button onClick={() => setPageHandler(page + 1)} className="cursor-pointer">next</button>
+        <button
+          onClick={() => setPageHandler(page + 1)}
+          className="cursor-pointer"
+        >
+          next
+        </button>
       </div>
     </div>
   );
