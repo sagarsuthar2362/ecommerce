@@ -10,6 +10,7 @@ import Sidebar from "../components/Sidebar";
 
 const Home = () => {
   const [sidebar, setSidebar] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const dispatch = useDispatch();
   const { products, loading, error } = useSelector((state) => state.product);
   const [page, setPage] = useState(1);
@@ -21,21 +22,18 @@ const Home = () => {
     dispatch(fetchProducts());
   }, []);
 
-  const totalPages = products.length / productsPerPage;
+  const filteredProducts =
+    selectedCategory.length > 0
+      ? products.filter((item) => selectedCategory.includes(item.category))
+      : products;
+
+  const totalPages = filteredProducts.length / productsPerPage;
   const setPageHandler = (pg) => {
     if (pg > 0 && pg <= totalPages) {
       setPage(pg);
     }
   };
 
-  const [selectedCategory, setSelectedCategory] = useState([]);
-
-  const filteredProducts =
-    selectedCategory.length > 0
-      ? products.filter((item) => selectedCategory.includes(item.category))
-      : products;
-
-  console.log(filteredProducts, selectedCategory);
   return (
     <div>
       <Sidebar

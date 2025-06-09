@@ -22,7 +22,7 @@ const Cart = () => {
   const deliveryCharges = totalAmount * 0.05;
 
   return (
-    <div className="p-4">
+    <div className="py-20 px-4">
       <div id="heading">
         <h1 className="text-4xl ">Your Cart</h1>
 
